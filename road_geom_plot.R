@@ -3,7 +3,7 @@
 library(MASS)
 library(lidR)
 
-road_surf1 <- readLAS(files = "data.las")
+road_surf1 <- readLAS(files = "data/data.las")
 
 df.road <- road_surf1@data ## convert las to data
 
@@ -30,9 +30,11 @@ library(ggplot2)
 ggplot(road_sec.rotated, aes(x = PC1, y = PC3)) +
   geom_point(color = "grey") +
   ggplot2::annotate("text", 
-                    mean(road_sec.rotated$PC1),  median(road_sec.rotated$PC2)+3*median(road_sec.rotated$PC2), 
+                    cumsum((range(road_sec.rotated$PC1)))[2]/2,  cumsum((range(road_sec.rotated$PC3)))[2]/2 + quantile(road_sec.rotated$PC3)[5], 
                     label=sprintf("Slope %% %3.1f",slope),
-                    color = "red", hjust = 1, size=5, angle = 30) +
+                    color = "red", hjust = 1, size=5, angle = 5) + coord_fixed(ratio = 100)+
   theme_bw(base_size = 20)+
   geom_abline(slope = slope, intercept = intercept, col="red", size=1.3)+
   xlab("X") + ylab("Y")
+abs(range(road_sec.rotated$PC1))
+cumsum(abs(range(road_sec.rotated$PC1)))[2]/2
