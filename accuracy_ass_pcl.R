@@ -18,8 +18,8 @@ model.fac <- factor(model.df$Classification)
 df <- confusionMatrix(ref.fac, model.fac)
 
 TN <- df[["table"]][1]
-FN <- df[["table"]][2]
-FP <- df[["table"]][3]
+FN <- df[["table"]][3]
+FP <- df[["table"]][2]
 TP <- df[["table"]][4]
 
 
