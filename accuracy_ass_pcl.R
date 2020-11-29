@@ -7,8 +7,8 @@ library(caret)
 
 # Read Data ---------------------------------------------------------------
 
-ref <- readLAS("ref.las")
-model <- readLAS("model.las")
+ref <- readLAS("data/ref1.las")
+model <- readLAS("data/mod1.las")
 
 ref.df <- ref@data
 model.df <- model@data
