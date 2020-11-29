@@ -15,6 +15,17 @@ model.df <- model@data
 ref.fac <- factor(ref.df$Classification)
 model.fac <- factor(model.df$Classification)
 
-confusionMatrix(ref.fac, model.fac)
+df <- confusionMatrix(ref.fac, model.fac)
+
+TN <- df[["table"]][1]
+FN <- df[["table"]][2]
+FP <- df[["table"]][3]
+TP <- df[["table"]][4]
 
 
+Completeness <- TP/(TP+FN)
+Correctness <- TP/(TP+FP)
+Quality <- TP/(TP+FN+FP)
+Accuracy <- (TP+TN)/(TP+TN+FN+FP)
+
+## 2- nonroad 11-road (ClassID)
