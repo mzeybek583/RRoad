@@ -36,8 +36,8 @@ df_xy <- data.frame(x=x, y=y)
 #Cross section Center point
 psi=c(0)
 #r <- segmented(lm(y~x),  fixed.psi =  list(x = c(0)))
-r <- segmented(lm(y~x),  seg.Z=~x, fixed.psi = list(x=0), 
-               control=seg.control(display=TRUE), npsi=1)
+r <- segmented(lm(y~x),  seg.Z=~x, psi = list(x=c(0,-3,3)), 
+               control=seg.control(display=TRUE), npsi=3)
 
 # Plot --------------------------------------------------------------------
 
@@ -48,3 +48,4 @@ ggplot(df_xy, aes(x = x, y = y)) +
   geom_line(data = dat2, color = 'red', size=2)+coord_fixed(ratio = 10)+
   xlab("PC1")+ylab("PC3")+
   theme_classic(base_size = 20)
+  
