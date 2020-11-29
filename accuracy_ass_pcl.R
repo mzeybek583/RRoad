@@ -27,3 +27,5 @@ Completeness <- TP/(TP+FN)
 Correctness <- TP/(TP+FP)
 Quality <- TP/(TP+FN+FP)
 Accuracy <- (TP+TN)/(TP+TN+FN+FP)
+
+## 2- nonroad 11-road (ClassID)
