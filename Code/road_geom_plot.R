@@ -4,7 +4,7 @@ library(MASS)
 library(lidR)
 
 road_surf1 <- readLAS(files = "data/data.las")
-
+plot(road_surf1)
 df.road <- road_surf1@data ## convert las to data
 
 # PCA ---------------------------------------------------------------------
@@ -13,10 +13,16 @@ rotated_df <- prcomp(x = df.road[,1:3])
 
 road_sec.rotated <- data.frame(rotated_df$x[,1:3]) # convert data to dataframe
 
-
+## Added Weight around ZERO##
+slp_ind <- road_sec.rotated$PC1<= 0.1 & road_sec.rotated$PC1>=-0.1
+w1 <- 1
+w2 <-0.5
+w <- rep(0.5,length(slp_ind))
+w[slp_ind] <- 1
+range(w)
 # Robust Fit Model --------------------------------------------------------
 
-rlm_fit <- rlm(PC3 ~ PC1, road_sec.rotated, psi = psi.bisquare)  # robust regession model
+rlm_fit <- rlm(PC3 ~ PC1, road_sec.rotated, weights = w, psi = psi.bisquare)  # robust regession model
 
 summary(rlm_fit)
 
