@@ -13,7 +13,7 @@
   Extracted_road_right <- data.frame(x=df@data$X,y=df@data$Y,z=df@data$Z)
   colnames(Extracted_road_right) <- c("X", "Y", "Z")
   rm(df)
-  cc <- c(min(Extracted_road_right$X)-0.2, min(Extracted_road_right$X)+0.2)
+  cc <- c(min(Extracted_road_right$X)-3, min(Extracted_road_right$X)+3)
   
   slp_ind <- Extracted_road_right$X >= cc[1] & Extracted_road_right$X<= cc[2]
   w.right <- rep(0,length(slp_ind))
