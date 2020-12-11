@@ -45,6 +45,9 @@ ggplot() +
   geom_polygon(data = init, aes(x=x, y=y, color = "Initial boundary"), fill = NA)+
   geom_polygon(data = improved, aes(x=x, y=y, color ="Refined boundary"), fill = NA)+
   theme_bw(base_size = 22)+
+  theme(legend.key = element_rect(size = 10),
+        legend.key.height = unit(1, "cm"),
+        legend.key.size = unit(0.5,"cm"))+
   labs(x="X", y= "Y", color = "Legend")+
   scale_color_manual(values = colors)+
   xlim(451940,451992)
