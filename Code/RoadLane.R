@@ -30,7 +30,7 @@ plot(las.export, color="int")
 
 # Filtre Points Threshold -------------------------------------------------
 
-threshold <- filter_poi(las.export, int > 53000)
+threshold <- filter_poi(las.export, int > 53000) # optimize the parameter
 
 # Write result to LAS file ------------------------------------------------
 
