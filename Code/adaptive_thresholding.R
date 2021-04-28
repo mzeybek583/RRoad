@@ -18,8 +18,8 @@ library(ggplot2)
 
 time <- proc.time()
 
-#data <- readLAS(files = "CC_auto_Road_extracted.las")
-data <- readLAS(files = "test4.las")
+data <- readLAS(files = "CC_auto_Road_extracted.las")
+#data <- readLAS(files = "test4.las")
 header <- data@header
 proc.time() - time
 
@@ -49,8 +49,18 @@ las.export@data$Intensity <- composite
 
 plot(las.export, color="Intensity", legend=T)
 
-#writeLAS(las.export, "Road_intensity.las") #WriteLAS file 
+#writeLAS(las.export, "Full_Road_intensity.las") #WriteLAS file 
 
+#Global Thresholding
+global.int <- data.frame(cbind(x=las.export@data$Intensity, ID= seq(1,length(las.export@data$Intensity))))
+
+ggplot(data = global.int)+
+  geom_bar(aes(x = x, y = ID),stat = "identity")+
+  theme_bw(base_size = 20)
+
+mean(global.int$x)
+median(global.int$x)
+sd(global.int$x)
 
 # Smoth Intensity ---------------------------------------------------------
 smooth_i <- function(x) { # user-defined function
@@ -69,7 +79,7 @@ plot(las.export, color="Intensity", legend=T)
 df <- las.export@data
 rm(las.export)
 k <- 20 # Neighboor points
-dist <- nn2(df[,1:3],df[,1:3], k=k+1, "bd", searchtype = "priority") #knn box-decomposition
+dist <- nn2(df[,1:3],df[,1:3], k=k+1, "kd", searchtype = "priority") #knn k-decomposition
 
 proc.time() - time
 
@@ -159,6 +169,6 @@ df$Intensity <- Intensity
 df$Intensity <- as.integer(df$Intensity)
  
 export.las <- LAS(df, header = header) 
-writeLAS(export.las,"las_export.las")
+writeLAS(export.las,"las_export_roadlane_fulldata.las")
  
 #write.csv(cbind(df[,1:3],intensity=df$Intensity, road=df$road),"result.csv")
