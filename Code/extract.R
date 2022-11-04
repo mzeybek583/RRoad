@@ -98,3 +98,4 @@ file.remove("data/CC_Result/eigentropy.las",
             "data/CC_Result/verticality.las")
 CC("CloudCompare -O data/CC_Result/feature_computed_las.las -SILENT")
 
+x <- 5
