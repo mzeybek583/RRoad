@@ -68,13 +68,14 @@ ransac_plane_fit <- function(points, iterations = 1000, threshold = 0.1) {
     sqrt(best_model[1]^2 + best_model[2]^2 + best_model[3]^2)
   inliers_idx <- which(distances < threshold)
   
-  return(list(model = best_model, inliers = inliers_idx))
+  return(list(model = best_model, inliers = inliers_idx, residuals = distances))
 }
 
 # Fit the first RANSAC plane
 result1 <- ransac_plane_fit(point_cloud)
 plane1 <- result1$model
 inliers1 <- result1$inliers
+residuals1 <- result1$residuals
 
 # Remove the inliers of the first plane from the point cloud
 point_cloud_remaining <- point_cloud[-inliers1, ]
@@ -83,6 +84,7 @@ point_cloud_remaining <- point_cloud[-inliers1, ]
 result2 <- ransac_plane_fit(point_cloud_remaining)
 plane2 <- result2$model
 inliers2 <- result2$inliers
+residuals2 <- result2$residuals
 
 # Print the plane equations
 cat("Plane 1 equation: ", plane1[1], "x +", plane1[2], "y +", plane1[3], "z +", plane1[4], "= 0\n")
@@ -105,3 +107,14 @@ plot_plane <- function(plane, xlim, ylim, color = "red") {
 # Add the fitted planes to the plot
 plot_plane(plane1, xlim = c(-10, 0), ylim = c(-5, 5), color = "red")
 plot_plane(plane2, xlim = c(0, 10), ylim = c(-5, 5), color = "green")
+
+# Plot residuals to assess fit quality
+par(mfrow = c(2, 1))  # Plot two histograms side by side
+
+# Residuals for Plane 1
+hist(residuals1, breaks = 30, main = "Residuals for Plane 1", xlab = "Distance from Plane", col = "lightblue")
+cat("Mean residual for Plane 1: ", mean(residuals1), "\n")
+
+# Residuals for Plane 2
+hist(residuals2, breaks = 30, main = "Residuals for Plane 2", xlab = "Distance from Plane", col = "lightgreen")
+cat("Mean residual for Plane 2: ", mean(residuals2), "\n")
